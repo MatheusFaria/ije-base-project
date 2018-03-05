@@ -1,0 +1,15 @@
+version: '3'
+services:
+  game:
+    privileged: true
+    build:
+      context: ./docker
+      dockerfile: Dockerfile
+    environment:
+        - DISPLAY=$DISPLAY
+    volumes:
+        - .:/game:ro
+        # Video X11
+        - /tmp/.X11-unix:/tmp/.X11-unix
+        # Audio
+        - /dev/snd:/dev/snd
