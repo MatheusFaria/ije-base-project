@@ -14,3 +14,9 @@ services:
         - /tmp/.X11-unix:/tmp/.X11-unix
         # Audio
         - /dev/snd:/dev/snd
+  pack:
+    build:
+      context: .
+      dockerfile: ./docker/pack/Dockerfile
+    volumes:
+       - ./packs:/game/packs

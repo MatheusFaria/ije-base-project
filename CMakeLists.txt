@@ -10,9 +10,22 @@ set (PROJECT_ASSETS_DIR  "${PROJECT_SOURCE_DIR}/assets")
 file(GLOB_RECURSE SOURCES "${PROJECT_SRC_DIR}/*.cpp"
                           "${PROJECT_SRC_DIR}/*.c")
 
-# Include Headers
-include_directories("${PROJECT_INCLUDE_DIR}")
+if(${COMPILER_PREFIX})
+    set(COMPILER_PREFIX g++)
+endif()
 
+message("-- Using compiler: ${COMPILER_PREFIX}")
+
+set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} /game/build/libs/${COMPILER_PREFIX}/lib)
+set(CMAKE_INCLUDE_PATH ${CMAKE_INCLUDE_PATH} /game/build/libs/${COMPILER_PREFIX}/include)
+
+message("-- Library path: ${CMAKE_LIBRARY_PATH}")
+message("-- Include path: ${CMAKE_INCLUDE_PATH}")
+
+include_directories(/game/build/libs/${COMPILER_PREFIX}/include)
+
+# Include Headers
+include_directories(${PROJECT_INCLUDE_DIR})
 
 
 #### Compilation ####
@@ -45,9 +58,50 @@ include_directories(${ENGINE_INCLUDE_DIR})
 
 add_executable(game ${SOURCES})
 
-target_link_libraries(game
-                      engine
-                      SDL2 SDL2_image SDL2_ttf SDL2_mixer)
+find_library(SDL2       NAMES libSDL2.a       PATHS ${CMAKE_LIBRARY_PATH})
+find_library(SDL2main   NAMES libSDL2main.a   PATHS ${CMAKE_LIBRARY_PATH})
+find_library(SDL2_image NAMES libSDL2_image.a PATHS ${CMAKE_LIBRARY_PATH})
+find_library(SDL2_ttf   NAMES libSDL2_ttf.a   PATHS ${CMAKE_LIBRARY_PATH})
+find_library(SDL2_mixer NAMES libSDL2_mixer.a PATHS ${CMAKE_LIBRARY_PATH})
+
+find_library(zlib       NAMES libzlibstatic.a PATHS ${CMAKE_LIBRARY_PATH})
+find_library(png        NAMES libpng.a        PATHS ${CMAKE_LIBRARY_PATH})
+find_library(png16      NAMES libpng16.a      PATHS ${CMAKE_LIBRARY_PATH})
+find_library(jpeg       NAMES libjpeg.a       PATHS ${CMAKE_LIBRARY_PATH})
+find_library(turbojpeg  NAMES libturbojpeg.a  PATHS ${CMAKE_LIBRARY_PATH})
+find_library(freetype   NAMES libfreetype.a   PATHS ${CMAKE_LIBRARY_PATH})
+find_library(ogg        NAMES libogg.a        PATHS ${CMAKE_LIBRARY_PATH})
+find_library(vorbis     NAMES libvorbis.a     PATHS ${CMAKE_LIBRARY_PATH})
+find_library(vorbisenc  NAMES libvorbisenc.a  PATHS ${CMAKE_LIBRARY_PATH})
+find_library(vorbisfile NAMES libvorbisfile.a PATHS ${CMAKE_LIBRARY_PATH})
+
+message("-- SDL2: ${SDL2}")
+message("-- SDL2main: ${SDL2main}")
+message("-- SDL2_image: ${SDL2_image}")
+message("-- SDL2_ttf: ${SDL2_ttf}")
+message("-- SDL2_mixer: ${SDL2_mixer}")
+
+message("-- zlib: ${zlib}")
+message("-- png: ${png}")
+message("-- png16: ${png16}")
+message("-- jpeg: ${jpeg}")
+message("-- turbojpeg: ${turbojpeg}")
+message("-- freetype: ${freetype}")
+message("-- ogg: ${ogg}")
+message("-- vorbis: ${vorbis}")
+message("-- vorbisenc: ${vorbisenc}")
+message("-- vorbisfile: ${vorbisfile}")
+
+target_link_libraries(game engine
+                      ${SDL2main} ${SDL2} ${SDL2_image} ${SDL2_ttf} ${SDL2_mixer}
+                      ${freetype}
+                      ${png} ${png16} ${jpeg} ${turbojpeg} ${zlib}
+                      ${vorbisenc} ${vorbisfile} ${vorbis} ${ogg}
+                      -lwinmm -limm32 -lversion)
+
+                      # -lm -ldinput8 -ldxguid -ldxerr8
+                      # -luser32 -lgdi32 -lwinmm -limm32 -lole32 -loleaut32
+                      # -lshell32 -lversion -luuid)
 
 
 #### Custom Commands ####

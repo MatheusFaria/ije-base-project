@@ -2,7 +2,7 @@
 #include "log.h"
 #include "sdl_log.h"
 
-int main(int, char**)
+int WinMain(int, char**)
 {
     // ===== Init dependencies =====
     INFO("Init dependencies");

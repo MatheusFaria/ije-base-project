@@ -17,10 +17,11 @@ RUN export uid=1000 gid=1000 && \
 USER developer
 ENV HOME /home/developer
 
-run mkdir $HOME/game-build
-workdir $HOME/game-build
-
-CMD  cmake /game && sudo make install && /usr/games/game
+cmd /bin/sh
+# run mkdir $HOME/game-build
+# workdir $HOME/game-build
+# 
+# CMD  cmake /game && sudo make install && /usr/games/game
 # cpack --config CPackConfig.cmake -G DEB -D CPACK_DEBIAN_PACKAGE_ARCHITECTURE=i386
 # cpack --config CPackConfig.cmake -G DEB -D CPACK_DEBIAN_PACKAGE_ARCHITECTURE=amd64
 # cpack --config CPackConfig.cmake -G RPM -D CPACK_RPM_PACKAGE_ARCHITECTURE=i386

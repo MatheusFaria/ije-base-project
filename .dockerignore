@@ -1,0 +1,6 @@
+docker*
+.dockerignore
+build/*
+.git*
+.editorconfig
+packs*
