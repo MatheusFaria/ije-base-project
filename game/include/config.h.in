@@ -1,0 +1,7 @@
+#ifndef __GAME_CONFIG_H_IN__
+#define __GAME_CONFIG_H_IN__
+
+#define GAME_NAME "@GAME_NAME@"
+#define GAME_ASSETS_FOLDER "@GAME_ASSETS_FOLDER@"
+
+#endif

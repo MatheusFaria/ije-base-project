@@ -2,7 +2,6 @@ version: '3'
 services:
   game:
     privileged: true
-    # command: firefox
     build:
       context: ./docker
       dockerfile: Dockerfile
@@ -14,9 +13,26 @@ services:
         - /tmp/.X11-unix:/tmp/.X11-unix
         # Audio
         - /dev/snd:/dev/snd
-  pack:
+
+  linux-test:
+    privileged: true
     build:
       context: .
-      dockerfile: ./docker/pack/Dockerfile
+      dockerfile: ./docker/pack/linux-test.Dockerfile
+    environment:
+        - DISPLAY=$DISPLAY
+        - PACK=/packs/game_1.0.1-1_amd64.deb
+    volumes:
+        - ./packs:/packs
+        - .:/game:ro
+        # Video X11
+        - /tmp/.X11-unix:/tmp/.X11-unix
+        # Audio
+        - /dev/snd:/dev/snd
+
+  pack-linux:
+    build:
+      context: .
+      dockerfile: ./docker/pack/linux.Dockerfile
     volumes:
        - ./packs:/game/packs
