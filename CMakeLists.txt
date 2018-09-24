@@ -1,9 +1,19 @@
 cmake_minimum_required(VERSION 3.0.2)
 
 project(game LANGUAGES CXX)
-
 set(GAME_NAME myawesomegame)
-set(GAME_ASSETS_FOLDER "${GAME_NAME}-assets/")
+
+option(RELEASE_BUILD "Release build" OFF)
+
+if (RELEASE_BUILD)
+    message("== Release BUILD ==")
+    set(GAME_RESOURCES_FOLDER "/usr/games/${GAME_NAME}-resources")
+else()
+    message("== Debug BUILD ==")
+    set(GAME_RESOURCES_FOLDER "game")
+endif()
+
+set(GAME_ASSETS_FOLDER "${GAME_RESOURCES_FOLDER}/assets")
 
 # Set directory folders
 set (PROJECT_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/game/include")
@@ -63,34 +73,34 @@ add_custom_command(TARGET ${GAME_NAME} POST_BUILD
                    ${PROJECT_ASSETS_DIR} "${CMAKE_BINARY_DIR}/${GAME_ASSETS_FOLDER}")
 
 
-# #### Instalation ####
-# install(TARGETS ${GAME_NAME} DESTINATION /usr/games)
-# install(DIRECTORY ${PROJECT_ASSETS_DIR} DESTINATION /usr/games/${GAME_ASSETS_FOLDER)
-# 
-# #### Packs ####
-# 
-# # build a CPack driven installer package
-# include (InstallRequiredSystemLibraries)
-# 
-# set(CPACK_PACKAGE_NAME                "Game")
-# set(CPACK_PACKAGE_VENDOR              "UnB - FGA")
-# set(CPACK_RESOURCE_FILE_LICENSE       "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
-# set(CPACK_PACKAGE_VERSION_MAJOR       "1")
-# set(CPACK_PACKAGE_VERSION_MINOR       "0")
-# set(CPACK_PACKAGE_CONTACT             "Matheus Faria <matheusfaria@unb.br>")
-# set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Base game project of IJE")
-# set(CPACK_PACKAGE_DESCRIPTION         "Base game project of IJE with all the contents that a game needs to be developed on the course")
-# set(CPACK_PACKAGE_URL                 "https://unbgames.github.io")
-# 
-# # .deb related info
-# set(CPACK_DEBIAN_FILE_NAME            "DEB-DEFAULT")
-# set(CPACK_DEBIAN_PACKAGE_SECTION      "Games")
-# set(CPACK_DEBIAN_PACKAGE_HOMEPAGE     ${CPACK_PACKAGE_URL})
-# set(CPACK_DEBIAN_PACKAGE_DEPENDS      "libsdl2-2.0-0, libsdl2-image-2.0-0, libsdl2-mixer-2.0-0, libsdl2-ttf-2.0-0")
-# 
-# # .rpm related info
-# set(CPACK_RPM_FILE_NAME        "RPM-DEFAULT")
-# set(CPACK_RPM_PACKAGE_LICENSE  "MIT")
-# set(CPACK_RPM_PACKAGE_URL      ${CPACK_PACKAGE_URL})
-# set(CPACK_RPM_PACKAGE_REQUIRES "SDL2, SDL2_image, SDL2_mixer, SDL2_ttf")
-# include (CPack)
+#### Instalation ####
+install(TARGETS ${GAME_NAME} DESTINATION /usr/games)
+install(DIRECTORY ${PROJECT_ASSETS_DIR} DESTINATION ${GAME_RESOURCES_FOLDER})
+
+#### Packs ####
+
+# build a CPack driven installer package
+include (InstallRequiredSystemLibraries)
+
+set(CPACK_PACKAGE_NAME                "Game")
+set(CPACK_PACKAGE_VENDOR              "UnB - FGA")
+set(CPACK_RESOURCE_FILE_LICENSE       "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
+set(CPACK_PACKAGE_VERSION_MAJOR       "1")
+set(CPACK_PACKAGE_VERSION_MINOR       "0")
+set(CPACK_PACKAGE_CONTACT             "Matheus Faria <matheusfaria@unb.br>")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Base game project of IJE")
+set(CPACK_PACKAGE_DESCRIPTION         "Base game project of IJE with all the contents that a game needs to be developed on the course")
+set(CPACK_PACKAGE_URL                 "https://unbgames.github.io")
+
+# .deb related info
+set(CPACK_DEBIAN_FILE_NAME            "DEB-DEFAULT")
+set(CPACK_DEBIAN_PACKAGE_SECTION      "Games")
+set(CPACK_DEBIAN_PACKAGE_HOMEPAGE     ${CPACK_PACKAGE_URL})
+set(CPACK_DEBIAN_PACKAGE_DEPENDS      "libsdl2-2.0-0, libsdl2-image-2.0-0, libsdl2-mixer-2.0-0, libsdl2-ttf-2.0-0")
+
+# .rpm related info
+set(CPACK_RPM_FILE_NAME        "RPM-DEFAULT")
+set(CPACK_RPM_PACKAGE_LICENSE  "MIT")
+set(CPACK_RPM_PACKAGE_URL      ${CPACK_PACKAGE_URL})
+set(CPACK_RPM_PACKAGE_REQUIRES "SDL2, SDL2_image, SDL2_mixer, SDL2_ttf")
+include (CPack)

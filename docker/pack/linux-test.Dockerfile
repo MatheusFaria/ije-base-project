@@ -17,4 +17,5 @@ ENV HOME=/home/developer  \
     PATH=$PATH:/usr/games \
     PACK=/packs
 
-cmd sudo dpkg -i ${PACK} && ls /usr/games && echo $PATH && game
+cmd /bin/sh
+# sudo dpkg -i ${PACK} && ls /usr/games && echo $PATH && game

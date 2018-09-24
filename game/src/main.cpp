@@ -10,6 +10,8 @@ int WinMain(int, char**)
 int main(int, char**)
 #endif
 {
+    INFO("Assest como from: " << GAME_ASSETS_FOLDER);
+
     // ===== Init dependencies =====
     INFO("Init dependencies");
 
@@ -83,7 +85,7 @@ int main(int, char**)
     SDL_Texture * play_button_texture = NULL;
 
     SDL_Surface * image = NULL;
-    image = IMG_Load("myawesomegame-assets/sprites/image.png");
+    image = IMG_Load(ASSETS_PATH("/sprites/image.png"));
 
     if (image == NULL)
     {
@@ -109,7 +111,7 @@ int main(int, char**)
 
     TTF_Font * font = NULL;
 
-    font = TTF_OpenFont( "myawesomegame-assets/fonts/font.ttf", 28);
+    font = TTF_OpenFont(ASSETS_PATH("/fonts/font.ttf"), 28);
     if(font == NULL)
     {
         SDL_TTF_ERROR("Could not load font.ttf");
@@ -143,7 +145,7 @@ int main(int, char**)
 
     // ===== Music =====
 
-    Mix_Music * music = Mix_LoadMUS("myawesomegame-assets/sounds/music.ogg");
+    Mix_Music * music = Mix_LoadMUS(ASSETS_PATH("/sounds/music.ogg"));
 
     if(music == NULL)
     {
