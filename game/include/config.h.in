@@ -6,12 +6,7 @@
 #define GAME_NAME "@GAME_NAME@"
 #define GAME_ASSETS_FOLDER "@GAME_ASSETS_FOLDER@"
 
-std::string assets_path_joiner(std::string file) {
-    std::string file_s(file);
-    if (file_s.size() == 0 || file_s[0] != '/') file_s = "/" + file_s;
-
-    return std::string(GAME_ASSETS_FOLDER) + file_s;
-}
+std::string assets_path_joiner(std::string file);
 
 #define ASSETS_PATH(path) (assets_path_joiner(path).c_str())
 

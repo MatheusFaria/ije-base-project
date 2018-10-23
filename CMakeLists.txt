@@ -32,6 +32,8 @@ include_directories("${PROJECT_BINARY_DIR}")
 
 
 #### Compilation ####
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Compilation Flags
 set(COMPILE_FLAGS "")
@@ -82,7 +84,7 @@ install(DIRECTORY ${PROJECT_ASSETS_DIR} DESTINATION ${GAME_RESOURCES_FOLDER})
 # build a CPack driven installer package
 include (InstallRequiredSystemLibraries)
 
-set(CPACK_PACKAGE_NAME                "Game")
+set(CPACK_PACKAGE_NAME                ${GAME_NAME})
 set(CPACK_PACKAGE_VENDOR              "UnB - FGA")
 set(CPACK_RESOURCE_FILE_LICENSE       "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
 set(CPACK_PACKAGE_VERSION_MAJOR       "1")
